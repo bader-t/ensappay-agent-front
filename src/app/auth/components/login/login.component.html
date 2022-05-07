@@ -1,28 +1,30 @@
 <div class="container mt-5 pt-5">
-  <div class="row mt-5">
-    <div class="col-12 col-sm-7 col-md-6 m-auto">
-      <div class="card border-0 shadow">
-
-        <div class="card-body">
-          <h3 class="text-center my-2">S'identifier</h3>
-          <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="px-2 pb-2">
-            <div class="mb-3">
-              <label for="loginUsername" class="form-label">Identifiant</label>
-              <input name="username" ngModel required #username="ngModel" type="text" class="form-control"
-                id="loginUsername" placeholder="Entrer votre identifiant">
-
-            </div>
-            <div class="mb-3">
-              <label for="loginPassword" class="form-label">Mot de passe</label>
-              <input name="password" ngModel required #password="ngModel" type="password" class="form-control"
-                id="loginPassword" placeholder="Entrer votre mot de passe">
-            </div>
-            <button type="submit" class="btn btn-primary mt-2 w-100">S'identifier</button>
-
-
-          </form>
+  <div class="card col-12 col-sm-7 col-md-6 m-auto">
+    <div class="card-body bg-light">
+      <h4 class="text-center my-2">S'identifier</h4>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="bg-white p-3">
+        <div class="mb-3">
+          <label for="username" class="form-label">Identifiant</label>
+          <input formControlName="username" type="text" class="form-control" placeholder="Entrer votre identifiant"
+            [ngClass]="{ 'is-invalid': submitted && f['username'].errors }">
+          <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+            <div *ngIf="f['username'].errors['required']">Entrer un numéro de téléphone</div>
+          </div>
         </div>
-      </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Mot de passe</label>
+          <input formControlName="password" type="password" class="form-control" placeholder="Entrer votre mot de passe"
+            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+          <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+            <div *ngIf="f['password'].errors['required']">Entrer un numéro de téléphone</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2 w-100">S'identifier</button>
+
+
+      </form>
     </div>
+
   </div>
 </div>

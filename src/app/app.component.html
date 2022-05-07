@@ -1,4 +1,4 @@
-<app-header *ngIf="agent"></app-header>
+<app-header *ngIf="authService.isLoggedIn()"></app-header>
 <div>
   <router-outlet></router-outlet>
 </div>

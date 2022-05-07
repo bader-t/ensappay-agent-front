@@ -11,7 +11,7 @@ export class AppComponent {
 
   agent: String;
 
-    constructor(private authService: AuthService) {
+    constructor(public authService: AuthService) {
         this.agent = authService.agent;
     }
 

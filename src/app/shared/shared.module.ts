@@ -20,7 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   exports:[
     HeaderComponent,
     FooterComponent,
-    ReactiveFormsModule,HttpClientModule
+    ReactiveFormsModule,
+    HttpClientModule
   ]
 })
 export class SharedModule { }
