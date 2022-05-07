@@ -1,0 +1,8 @@
+<div *ngFor="let alert of alerts" class="{{cssClass(alert)}}">
+  <span class="ps-2" [innerHTML]="alert.message"></span>
+
+  <a class="close" data-dismiss="alert" aria-label="Close" (click)="removeAlert(alert)">
+    <span aria-hidden="true">&times;</span>
+  </a>
+
+</div>

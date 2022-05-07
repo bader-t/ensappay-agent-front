@@ -13,7 +13,7 @@ export class AuthService {
   // public agent: Agent;
   private agentUrl: string;
 
-  agent = "";
+  agent = "bader";
   constructor(private http: HttpClient,private router: Router) {
     this.agentUrl = 'http://localhost:8080/api/auth/';
     this.agentSubject = new BehaviorSubject<Agent>(JSON.parse(localStorage.getItem('agent') || '{}'));
@@ -36,7 +36,7 @@ export class AuthService {
   }
   isPasswordNotReseted() {
     console.log(this.agent);
-    return false;
+    return true;
   }
 
   logout(){

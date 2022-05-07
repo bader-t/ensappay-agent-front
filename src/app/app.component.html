@@ -1,4 +1,5 @@
 <app-header *ngIf="authService.isLoggedIn()"></app-header>
-<div>
+<div class="container-fluid mt-4 pt-2">
+  <app-alert></app-alert>
   <router-outlet></router-outlet>
 </div>
