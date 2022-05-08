@@ -6,12 +6,12 @@ import { AuthService } from '../auth/services/auth.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent  {
+export class HomeComponent {
 
   agent: String;
 
-    constructor(private authService: AuthService) {
-        this.agent = authService.agent;
-    }
+  constructor(private authService: AuthService) {
+    this.agent = authService.agentValue.name;
+  }
 
 }

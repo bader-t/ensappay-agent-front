@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-change-password',
@@ -11,21 +14,38 @@ export class ChangePasswordComponent implements OnInit {
   submitted = false;
 
 
-  resetPasswordForm = new FormGroup({
+  changePasswordForm = new FormGroup({
     password: new FormControl('', Validators.required)
   });
-  constructor() { }
+  constructor(private alertService: AlertService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
-  onSubmit(){
+  onSubmit() {
     this.submitted = true;
-    if (this.resetPasswordForm.invalid) {
+    this.alertService.clear();
+    if (this.changePasswordForm.invalid) {
       return;
     }
+    this.loading = true;
+
+    this.authService.changePassword(this.changePasswordForm.value).subscribe({
+      next: (v: any) => {
+        this.alertService.success(v);
+        this.loading = false;
+      },
+      error: (e: any) => {
+        this.alertService.error(e.statusText);
+        this.loading = false;
+      },
+      complete: () => {
+        this.alertService.success("Votre mot de passe a été changé avec succé");
+        this.router.navigate([''])
+      }
+    })
 
   }
 
-  get f(){return this.resetPasswordForm.controls;}
+  get f() { return this.changePasswordForm.controls; }
 
 }

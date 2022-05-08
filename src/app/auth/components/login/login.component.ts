@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +11,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   submitted = false;
   loginForm = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('',  Validators.required),
+    phoneNumber: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   });
-  constructor() { }
+  constructor(private alertService: AlertService, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -21,6 +23,20 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.alertService.clear();
+
+    this.authService.login(this.f['phoneNumber'].value, this.f['password'].value).subscribe(
+      {
+        next: (v: any) => {
+          this.alertService.success(v);
+        },
+        error: (e: any) => {
+          this.alertService.error(e.statusText);
+        },
+        complete: () => { this.alertService.success("Succé") }
+      }
+    );
+
     if (this.loginForm.invalid) {
       return;
     }
