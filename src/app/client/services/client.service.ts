@@ -9,15 +9,15 @@ import { Client } from '../model/client';
 export class ClientService {
 
   private clientUrl: string;
-  headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+
 
   constructor(private http: HttpClient) {
-    this.clientUrl = 'http://localhost:8080/api/agent/';
+    this.clientUrl = 'http://localhost:8080/api/account/agent/';
   }
-  
-  public findAllClients(): Observable<Client[]> {
+
+  public getAllClients(): Observable<Client[]> {
     return this.http.get<Client[]>(
-      this.clientUrl  + 'clients', {headers: this.headers}
+      this.clientUrl + 'inactive-clients'
     );
   }
 }

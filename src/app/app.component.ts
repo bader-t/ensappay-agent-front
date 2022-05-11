@@ -9,10 +9,8 @@ import { AuthService } from './auth/services/auth.service';
 export class AppComponent {
   title = 'agent';
 
-  agent: String;
 
   constructor(public authService: AuthService) {
-    this.agent = authService.agentValue.name;
   }
 
 }

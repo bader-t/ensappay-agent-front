@@ -1,57 +1,59 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Agent } from 'src/app/shared/models/agent.model';
+import { Observable } from 'rxjs';
+import { TokenStorageService } from './token-storage.service';
 
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private agentSubject: BehaviorSubject<Agent>;
-  public agent: Observable<Agent>;
+
   private agentUrl: string;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private tokenStorage: TokenStorageService) {
     this.agentUrl = 'http://localhost:8080/api/';
-    this.agentSubject = new BehaviorSubject<Agent>(JSON.parse(localStorage.getItem('agent') || '{}'));
-    this.agent = this.agentSubject.asObservable();
 
   }
 
-  public get agentValue(): Agent {
-    return this.agentSubject.value;
-  }
-
-  login(phoneNumber: string, password: string) {
-    return this.http.post<Agent>(this.agentUrl + "login", { phoneNumber, password })
-      .pipe(map(agent => {
-        localStorage.setItem('agent', JSON.stringify(agent));
-        this.agentSubject.next(agent);
-        return agent;
-      }));
+  login(phoneNumber: string, password: string): Observable<any> {
+    return this.http.post<HttpResponse<any>>(this.agentUrl + 'login', {
+      phoneNumber,
+      password
+    }, { observe: 'response' as 'response' });
   }
 
   changePassword(model: any) {
-    return this.http.post(this.agentUrl + "account/client/change-password", model);
+    return this.http.put(this.agentUrl + "account/agent/change-password", model, httpOptions);
+  }
+
+  refreshToken(token: string, headers: HttpHeaders) {
+    return this.http.post(this.agentUrl + 'auth/refresh', {
+      refresh_token: token
+    }, { headers: headers });
   }
 
 
+  getAgentName() {
+    return this.tokenStorage.getAgent().name;
+  }
 
   isLoggedIn() {
-    console.log(!(this.agentSubject === null));
-    // return !(this.agentSubject === null);
-    return false;
-  }
-  isPasswordNotChanged() {
-    return this.agentValue.passwordNotChanged;
-    // return true;
+    return !(this.tokenStorage.getToken() === null);
   }
 
-  logout() {
-    localStorage.removeItem('agent');
-    this.agentSubject.next(null!);
-    this.router.navigate(['']);
+  isFirstLogin() {
+    return this.tokenStorage.getIsFirstLogin();
   }
+
+  // logout() {
+  //   localStorage.removeItem('agent');
+  //   this.agentSubject.next(null!);
+  //   this.router.navigate(['']);
+  // }
 }

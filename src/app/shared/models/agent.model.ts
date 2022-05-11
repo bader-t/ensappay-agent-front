@@ -4,5 +4,5 @@ export class Agent {
   username!: string;
   phone!: string;
   email!: string;
-  passwordNotChanged!: boolean;
+  isFirstLogin!: boolean;
 }
