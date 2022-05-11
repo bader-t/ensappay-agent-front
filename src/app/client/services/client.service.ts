@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Client } from '../model/client';
+import { Client } from 'src/app/shared/models/client.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
+
 
   private clientUrl: string;
 
@@ -17,7 +18,11 @@ export class ClientService {
 
   public getAllClients(): Observable<Client[]> {
     return this.http.get<Client[]>(
-      this.clientUrl + 'inactive-clients'
+      this.clientUrl + 'inactive-accounts'
     );
+  }
+
+  public confirm(client: Client) {
+    return this.http.put(this.clientUrl + 'activate-account', client);
   }
 }

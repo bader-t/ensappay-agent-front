@@ -1,7 +1,7 @@
 <div class="card mb-3">
   <div class="card-body bg-light">
     <h4 class="mb-3 text-dark">Demandes d'ouverture d'un compte</h4>
-    <table id="example" class="table table-striped" style="width:100%">
+    <table class="table table-striped" style="width:100%">
       <thead>
         <tr>
           <th>ID</th>
@@ -13,13 +13,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>61</td>
-          <td>Tiger Nixon</td>
-          <td>System Architect</td>
-          <td>201test@email.com</td>
-          <td>HSSAB1</td>
-          <td>activer</td>
+        <tr *ngFor="let client of clients; let i = index">
+          <td>{{client.id}}</td>
+          <td>{{client.name}}</td>
+          <td>{{client.surname}}</td>
+          <td>{{client.email}}</td>
+          <td>{{client.productType}}</td>
+          <td><button class="btn btn-primary" type="button" (click)="confirmAccount(client)">
+              confirmer
+            </button></td>
         </tr>
 
       </tbody>

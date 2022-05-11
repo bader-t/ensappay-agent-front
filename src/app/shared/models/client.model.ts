@@ -1,7 +1,9 @@
 export class Client {
-  productType!: string;
+  id!: number;
   name!: string;
   surname!: string;
   phone!: string;
   email!: string;
+  productType!: string;
+  accountStatus!: string;
 }
