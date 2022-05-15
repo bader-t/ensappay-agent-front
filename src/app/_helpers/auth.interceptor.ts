@@ -10,6 +10,7 @@ import {
 import { AuthService } from '../auth/services/auth.service';
 import { TokenStorageService } from '../auth/services/token-storage.service';
 import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError } from 'rxjs';
+import { AlertService } from '../shared/services/alert.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -17,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(private tokenService: TokenStorageService, private authService: AuthService) { }
+  constructor(private tokenService: TokenStorageService, private authService: AuthService, private alertService: AlertService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     let authReq = req;
@@ -41,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
       this.refreshTokenSubject.next(null);
 
       const token = this.tokenService.getRefreshToken();
-      console.log('refresh', token)
+      console.log('refresh token', token)
 
       if (token)
         return this.authService.refreshToken(token, new HttpHeaders({ 'Authorization': 'Bearer ' + token })).pipe(
@@ -70,7 +71,6 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private addTokenHeader(request: HttpRequest<any>, token: string) {
-    console.log('first', token)
     return request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
   }
 }

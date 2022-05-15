@@ -36,13 +36,12 @@ export class LoginComponent implements OnInit {
           this.tokenStorage.saveRefreshToken(data.headers.get('refresh_token'));
           this.tokenStorage.setIsFirstLogin(data.body.firstLogin);
           this.tokenStorage.saveAgent(data.body.agentProfile);
-          this.router.navigate(['']);
+
         },
         error: (e: any) => {
-          this.alertService.error(e.error.message);
+          this.alertService.error("Mauvais login ou mot de passe!")
         },
         complete: () => {
-          this.alertService.success("Succé");
           this.router.navigate(['']);
         }
       }

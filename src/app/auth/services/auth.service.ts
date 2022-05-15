@@ -51,9 +51,5 @@ export class AuthService {
     return this.tokenStorage.getIsFirstLogin();
   }
 
-  // logout() {
-  //   localStorage.removeItem('agent');
-  //   this.agentSubject.next(null!);
-  //   this.router.navigate(['']);
-  // }
+
 }
