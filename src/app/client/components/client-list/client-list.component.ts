@@ -40,8 +40,22 @@ export class ClientListComponent implements OnInit {
   confirmAccount(client: Client): void {
     this.clientService.confirm(client).subscribe({
       next: (data: any) => {
-        console.log('data', data);
         this.alertService.success("Compte enregistré avec succé");
+        this.refreshList();
+      },
+      error: (e: any) => {
+        this.alertService.error(e.error.message);
+      },
+      complete: () => {
+      }
+    });
+  }
+
+
+  denyAccount(client: Client): void {
+    this.clientService.deny(client).subscribe({
+      next: (data: any) => {
+        this.alertService.success("Compte refusé avec succé");
         this.refreshList();
       },
       error: (e: any) => {

@@ -21,7 +21,11 @@
           <td>{{client.productType}}</td>
           <td><button class="btn btn-primary" type="button" (click)="confirmAccount(client)">
               confirmer
-            </button></td>
+            </button>
+            <button class="btn btn-danger" type="button" (click)="denyAccount(client)">
+              refuser
+            </button>
+          </td>
         </tr>
 
       </tbody>

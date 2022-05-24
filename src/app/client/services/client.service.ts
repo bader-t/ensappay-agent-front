@@ -25,4 +25,7 @@ export class ClientService {
   public confirm(client: Client) {
     return this.http.put(this.clientUrl + 'activate-account', client);
   }
+  public deny(client: Client) {
+    return this.http.put(this.clientUrl + 'reject-account', client);
+  }
 }
