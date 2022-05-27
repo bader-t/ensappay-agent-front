@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Client } from 'src/app/shared/models/client.model';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
@@ -11,7 +12,27 @@ import { ClientService } from '../../services/client.service';
 })
 export class ClientListComponent implements OnInit {
 
-  clients?: Client[];
+  clients: Client[] = [];
+  currentClient: Client = {
+    id: 0,
+    name: "",
+    surname: "",
+    phone: "",
+    email: "",
+    productType: "",
+    accountStatus: "",
+  };
+
+  currentIndex = -1;
+  name = '';
+
+  page = 1;
+  count = 0;
+  pageSize = 3;
+  pageSizes = [3, 6, 9];
+
+  faCheck = faCheck;
+  faXmark = faXmark;
 
   constructor(private clientService: ClientService, private alertService: AlertService) { }
 
@@ -32,6 +53,11 @@ export class ClientListComponent implements OnInit {
 
     })
   }
+  setActiveClient(client: Client, index: number): void {
+    console.log('client', client);
+    this.currentClient = client;
+    this.currentIndex = index;
+  }
 
   refreshList(): void {
     this.getAllClients();
@@ -51,7 +77,6 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-
   denyAccount(client: Client): void {
     this.clientService.deny(client).subscribe({
       next: (data: any) => {
@@ -64,6 +89,17 @@ export class ClientListComponent implements OnInit {
       complete: () => {
       }
     });
+  }
+
+  handlePageChange(event: number): void {
+    this.page = event;
+    this.getAllClients();
+  }
+
+  handlePageSizeChange(event: any): void {
+    this.pageSize = event.target.value;
+    this.page = 1;
+    this.getAllClients();
   }
 
 }

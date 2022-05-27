@@ -1,4 +1,4 @@
-<div *ngFor="let alert of alerts" class="{{cssClass(alert)}}">
+<div *ngFor="let alert of alerts" class="{{cssClass(alert)}}" style="width: 400px;">
   <span class="ps-2" [innerHTML]="alert.message"></span>
 
   <a class="close" data-dismiss="alert" aria-label="Close" (click)="removeAlert(alert)">

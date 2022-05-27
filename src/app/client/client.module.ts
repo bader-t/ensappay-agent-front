@@ -5,6 +5,8 @@ import { ClientRoutingModule } from './client-routing.module';
 import { LayoutComponent } from './components/layout/layout.component';
 import { SharedModule } from '../shared/shared.module';
 import { ClientListComponent } from './components/client-list/client-list.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -15,9 +17,11 @@ import { ClientListComponent } from './components/client-list/client-list.compon
   imports: [
     CommonModule,
     ClientRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule,
+    FontAwesomeModule
   ],
-  exports:[
+  exports: [
     LayoutComponent,
     ClientListComponent
   ]

@@ -1,35 +1,58 @@
 <div class="card mb-3">
   <div class="card-body bg-light">
     <h4 class="mb-3 text-dark">Demandes d'ouverture d'un compte</h4>
-    <table class="table table-striped" style="width:100%">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Email</th>
-          <th>Type du compte</th>
-          <th>Demande</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let client of clients; let i = index">
-          <td>{{client.id}}</td>
-          <td>{{client.name}}</td>
-          <td>{{client.surname}}</td>
-          <td>{{client.email}}</td>
-          <td>{{client.productType}}</td>
-          <td><button class="btn btn-primary" type="button" (click)="confirmAccount(client)">
-              confirmer
-            </button>
-            <button class="btn btn-danger" type="button" (click)="denyAccount(client)">
-              refuser
-            </button>
-          </td>
-        </tr>
+    <div class="table-responsive">
+      <table class="table table-bordered " style="width:100%">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Type du compte</th>
+            <th>Demande</th>
+          </tr>
+        </thead>
+        <tbody class="border-top-0 bg-white">
+          <tr *ngFor="let client of clients | paginate : {
+          itemsPerPage: pageSize,
+          currentPage: page,
+          totalItems: count
+        };  let i = index" [class.active]="i == currentIndex" (click)="setActiveClient(client, i)">
+            <td>{{client.id}}</td>
+            <td>{{client.name}}</td>
+            <td>{{client.surname}}</td>
+            <td>{{client.email}}</td>
+            <td>{{client.productType}}</td>
+            <td><button class=" btn btn-sm border-success text-success mx-1" type="button" data-toggle="tooltip"
+                data-placement="top" title="Confirmer" (click)="confirmAccount(client)">
+                <fa-icon [icon]="faCheck"></fa-icon>
+              </button>
+              <button class="btn btn-sm border-danger text-danger mx-1" type="button" data-toggle="tooltip"
+                data-placement="top" title="Refuser" (click)="denyAccount(client)">
+                <fa-icon [icon]="faXmark"></fa-icon>
+              </button>
+            </td>
+          </tr>
 
-      </tbody>
-
-    </table>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="ms-auto align-items-center d-flex justify-content-between">
+      <div class="">
+        Demandes par page:
+        <select (change)="handlePageSizeChange($event)">
+          <option *ngFor="let size of pageSizes" [value]="size">
+            {{ size }}
+          </option>
+        </select>
+      </div>
+      <div class="d-flex align-items-center">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true"
+          (pageChange)="handlePageChange($event)"></pagination-controls>
+      </div>
+    </div>
   </div>
 </div>
