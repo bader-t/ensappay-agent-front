@@ -10,10 +10,12 @@ export class ClientService {
 
 
   private clientUrl: string;
+  private cmiUrl: string;
 
 
   constructor(private http: HttpClient) {
     this.clientUrl = 'http://localhost:8080/api/account/agent/';
+    this.cmiUrl = 'http://localhost:8080/cmi-rest/';
   }
 
   public getAllClients(): Observable<Client[]> {
@@ -25,7 +27,13 @@ export class ClientService {
   public confirm(client: Client) {
     return this.http.put(this.clientUrl + 'activate-account', client);
   }
+
   public deny(client: Client) {
     return this.http.put(this.clientUrl + 'reject-account', client);
   }
+
+  public createBankAccount(user: any) {
+    return this.http.post(this.cmiUrl + 'create-bank-account', user);
+  }
+
 }

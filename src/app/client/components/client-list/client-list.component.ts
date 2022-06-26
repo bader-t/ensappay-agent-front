@@ -53,6 +53,7 @@ export class ClientListComponent implements OnInit {
 
     })
   }
+
   setActiveClient(client: Client, index: number): void {
     console.log('client', client);
     this.currentClient = client;
@@ -68,6 +69,7 @@ export class ClientListComponent implements OnInit {
       next: (data: any) => {
         this.alertService.success("Compte enregistré avec succé");
         this.refreshList();
+        this.createBankAccount({ phoneNumber: data.phoneNumber, name: data.clientProfile.name + " " + data.clientProfile.surname })
       },
       error: (e: any) => {
         this.alertService.error(e.error.message);
@@ -75,6 +77,21 @@ export class ClientListComponent implements OnInit {
       complete: () => {
       }
     });
+  }
+
+  createBankAccount(user: any) {
+    this.clientService.createBankAccount(user).subscribe(
+      {
+        next: (data: any) => {
+        },
+        error: (e: any) => {
+          this.alertService.error(e.error.message);
+        },
+        complete: () => {
+        }
+      }
+    )
+
   }
 
   denyAccount(client: Client): void {
