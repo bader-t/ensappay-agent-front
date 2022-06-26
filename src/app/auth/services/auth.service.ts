@@ -17,7 +17,7 @@ export class AuthService {
   private agentUrl: string;
 
   constructor(private http: HttpClient, private router: Router, private tokenStorage: TokenStorageService) {
-    this.agentUrl = 'http://localhost:8080/api/';
+    this.agentUrl = 'https://ensa-pay-2022.herokuapp.com/api/';
 
   }
 

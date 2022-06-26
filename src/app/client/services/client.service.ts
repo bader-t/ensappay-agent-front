@@ -14,8 +14,8 @@ export class ClientService {
 
 
   constructor(private http: HttpClient) {
-    this.clientUrl = 'http://localhost:8080/api/account/agent/';
-    this.cmiUrl = 'http://localhost:8080/cmi-rest/';
+    this.clientUrl = 'https://ensa-pay-2022.herokuapp.com/api/account/agent/';
+    this.cmiUrl = 'https://ensa-pay-2022.herokuapp.com/cmi-rest/';
   }
 
   public getAllClients(): Observable<Client[]> {
